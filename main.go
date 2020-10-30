@@ -18,7 +18,7 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/api/get-stock-list", GetStockList)
-	router.Run("8081")
+	router.Run(":8081")
 }
 
 func shanghaiCompanies() ([]Company, error) {
