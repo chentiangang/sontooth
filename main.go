@@ -7,7 +7,7 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/api/get-stock-list", GetStockList)
-	router.GET("/api/goland", Goland)
+	router.GET("/son/get-stock-list", GetStockList)
+	router.GET("/son/goland", Goland)
 	router.Run(":8082")
 }
