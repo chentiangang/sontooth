@@ -9,5 +9,5 @@ func main() {
 
 	router.GET("/api/get-stock-list", GetStockList)
 	router.GET("/api/goland", Goland)
-	router.Run(":8081")
+	router.Run(":8082")
 }
