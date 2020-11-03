@@ -9,5 +9,6 @@ func main() {
 
 	router.GET("/son/get-stock-list", GetStockList)
 	router.GET("/son/goland", Goland)
+	router.GET("/son/suggest", Suggest)
 	router.Run(":8082")
 }
