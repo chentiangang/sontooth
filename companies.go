@@ -112,9 +112,7 @@ func alias(name string) string {
 	a := pinyin.NewArgs()
 	var s1 string
 	for _, i := range pinyin.Pinyin(name, a) {
-		for _, j := range i {
-			s1 = s1 + j
-		}
+		s1 = s1 + i[1]
 	}
 
 	var s2 string
