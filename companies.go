@@ -117,7 +117,7 @@ func alias(name string) string {
 	a := pinyin.NewArgs()
 	var s1 string
 	for _, i := range pinyin.Pinyin(name, a) {
-		s1 = s1 + fmt.Sprintf("%s", i[:1])
+		s1 = s1 + i[0][:1]
 	}
 
 	var s2 string
