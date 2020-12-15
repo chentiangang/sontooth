@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"project/myself/xlog"
 	"strings"
+
+	"github.com/chentiangang/xlog"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"

@@ -9,6 +9,7 @@ import (
 
 	xlsx "github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/gin-gonic/gin"
+	pinyin "github.com/mozillazg/go-pinyin"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 )
@@ -44,7 +45,8 @@ func shanghaiCompanies() ([]Company, error) {
 		l := strings.Split(i, "\t")
 		if len(l) > 2 {
 			//fmt.Println(l[0], l[1])
-			companys = append(companys, Company{Code: l[0], Name: strings.TrimSpace(l[1]), Exchange: "sh"})
+
+			companys = append(companys, Company{Code: l[0], Name: strings.TrimSpace(l[1]), Suggest: alias(strings.TrimSpace(l[1])), Exchange: "sh"})
 		}
 	}
 
@@ -67,7 +69,7 @@ func shenzhenCompanies() ([]Company, error) {
 
 	var companys []Company
 	for _, row := range rows {
-		companys = append(companys, Company{Code: row[4], Name: strings.TrimSpace(row[5]), Exchange: "sz", Industry: strings.TrimSpace(row[17])})
+		companys = append(companys, Company{Code: row[4], Name: strings.TrimSpace(row[5]), Suggest: alias(strings.TrimSpace(row[5])), Exchange: "sz", Industry: strings.TrimSpace(row[17])})
 	}
 
 	return companys, nil
@@ -79,6 +81,7 @@ type Company struct {
 	Name     string `json:"name"`
 	Exchange string `json:"exchange"`
 	Industry string `json:"industry"`
+	Suggest  string `json:"suggest"`
 }
 
 func GetStockList(c *gin.Context) {
@@ -103,4 +106,21 @@ func GetStockList(c *gin.Context) {
 
 	c.String(http.StatusOK, string(bs))
 
+}
+
+func alias(name string) string {
+	a := pinyin.NewArgs()
+	var s1 string
+	for _, i := range pinyin.Pinyin(name, a) {
+		for _, j := range i {
+			s1 = s1 + j
+		}
+	}
+
+	var s2 string
+	for _, j := range pinyin.LazyPinyin(name, a) {
+		s2 = s2 + j
+	}
+
+	return s1 + "-" + s2
 }
