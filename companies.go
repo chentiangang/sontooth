@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -109,10 +110,14 @@ func GetStockList(c *gin.Context) {
 }
 
 func alias(name string) string {
+	if name == "" {
+		fmt.Println(name)
+		return name
+	}
 	a := pinyin.NewArgs()
 	var s1 string
 	for _, i := range pinyin.Pinyin(name, a) {
-		s1 = s1 + i[1]
+		s1 = s1 + fmt.Sprintf("%s", i[:1])
 	}
 
 	var s2 string
@@ -120,5 +125,6 @@ func alias(name string) string {
 		s2 = s2 + j
 	}
 
+	fmt.Println(s1, s2)
 	return s1 + "-" + s2
 }
