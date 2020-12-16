@@ -42,7 +42,10 @@ func shanghaiCompanies() ([]Company, error) {
 	}
 	var companys []Company
 	s := strings.Split(string(res), "\n")
-	for _, i := range s {
+	for n, i := range s {
+		if n == 0 {
+			continue
+		}
 		l := strings.Split(i, "\t")
 		if len(l) > 2 {
 			//fmt.Println(l[0], l[1])
@@ -69,7 +72,10 @@ func shenzhenCompanies() ([]Company, error) {
 	rows := f.GetRows("A股列表")
 
 	var companys []Company
-	for _, row := range rows {
+	for n, row := range rows {
+		if n == 0 {
+			continue
+		}
 		companys = append(companys, Company{Code: row[4], Name: strings.TrimSpace(row[5]), Suggest: alias(strings.TrimSpace(row[5])), Exchange: "sz", Industry: strings.TrimSpace(row[17])})
 	}
 
